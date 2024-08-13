@@ -1,9 +1,10 @@
-// URI mongodb+srv://ppjoshi2003:MU2a5fRRa1kS1Sde@cluster0.llc93zm.mongodb.net/
+// URI 
 const mongoose = require("mongoose")
+require('dotenv').config()
 
 async function connect() {
     try {
-        await mongoose.connect("mongodb+srv://ppjoshi2003:MU2a5fRRa1kS1Sde@cluster0.llc93zm.mongodb.net/");
+        await mongoose.connect(process.env.MONGO_URI);
         console.log("DB connected")
     } catch (error) {
         console.log("error connecting to DB: " + error)
