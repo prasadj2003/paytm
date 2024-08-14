@@ -4,7 +4,8 @@ const { z } = require("zod");
 const { JWT_SECRET } = require("../config");
 const jwt = require("jsonwebtoken");
 const { User } = require("../connection/connect");
-import { authMiddleware } from "../middleware";
+const {Account} = require("../models/accountSchema")
+const { authMiddleware } = require("../middleware.js");
 
 const signupBody = z.object({
   userName: z.string().email(),
@@ -40,6 +41,11 @@ router.post("/signup", authMiddleware, async (req, res) => {
   });
 
   const userId = user._id;
+
+  await Account.create({
+    userId,
+    balance: 1 + Math.random()*10000 
+  })
 
   const token = jwt.sign({
     userId,
@@ -101,7 +107,7 @@ router.post("/signin", authMiddleware, async (req, res) => {
 
 
 const updateBody = zod.object({
-	password: zod.string().optional(),
+	  password: zod.string().optional(),
     firstName: zod.string().optional(),
     lastName: zod.string().optional(),
 })
