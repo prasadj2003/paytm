@@ -3,8 +3,8 @@ const userRouter = require("./userRouter")
 const accountRouter = require("./account");
 const router = express.Router();
 
-router.get('/user', userRouter)
-router.get('/account', accountRouter)
+router.use('/user', userRouter)
+router.use('/account', accountRouter)
 
 
 
