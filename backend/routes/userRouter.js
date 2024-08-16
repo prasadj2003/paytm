@@ -3,7 +3,7 @@ const router = express.Router();
 const { z } = require("zod");
 const { JWT_SECRET } = require("../config");
 const jwt = require("jsonwebtoken");
-const { User } = require("../connection/connect");
+const { User } = require("../connection/connect.js");
 const {Account} = require("../models/accountSchema")
 const { authMiddleware } = require("../middleware.js");
 
@@ -59,7 +59,7 @@ router.post("/signup", authMiddleware, async (req, res) => {
 });
 
 const signinBody = z.object({
-  userName: z.string.email(),
+  userName: z.string().email(),
   password: z.string().min(6),
 });
 
@@ -106,10 +106,10 @@ router.post("/signin", authMiddleware, async (req, res) => {
 });
 
 
-const updateBody = zod.object({
-	  password: zod.string().optional(),
-    firstName: zod.string().optional(),
-    lastName: zod.string().optional(),
+const updateBody = z.object({
+	  password: z.string().optional(),
+    firstName: z.string().optional(),
+    lastName: z.string().optional(),
 })
 
 router.put("/", authMiddleware, async (req, res) => {
@@ -152,4 +152,4 @@ router.get("/bulk", async (req, res) => {
   })
 })
 
-module.exports = userRouter
+module.exports = router
