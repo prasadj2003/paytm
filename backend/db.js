@@ -1,8 +1,15 @@
-const { default: mongoose } = require('mongoose');
-const {User} = require("./userSchema.js")
+// backend/db.js
+const mongoose = require('mongoose');
+require('dotenv').config()
 
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+.then(() => console.log('DB connected'))
+.catch(err => console.log('DB connection error:', err));
 
-
+// Create a Schema for Users
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -34,14 +41,20 @@ const userSchema = new mongoose.Schema({
 
 const accountSchema = new mongoose.Schema({
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        type: mongoose.Schema.Types.ObjectId, // Reference to User model
+        ref: 'User',
         required: true
     },
     balance: {
         type: Number,
         required: true
     }
-})
+});
 
-module.exports = mongoose.model("Account", accountSchema);
+const Account = mongoose.model('Account', accountSchema);
+const User = mongoose.model('User', userSchema);
+
+module.exports = {
+	User,
+    Account
+};
