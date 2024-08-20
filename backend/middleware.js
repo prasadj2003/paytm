@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const authMiddleware = (req, res, next) => {
     const authHeader = req.headers.authorization;
 
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    if (!authHeader || !authHeader.startsWith('Bearer')) {
         console.log("Authorization header missing or malformed");
         return res.status(403).json({ error: "Authorization header missing or malformed" });
     }
