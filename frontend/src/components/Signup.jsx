@@ -11,23 +11,25 @@ function Signup() {
 
 
     const navigate = useNavigate();
-  async function handleSubmit() {
+  async function handleSubmit(e) {
     e.preventDefault();
     try {
-        await axios.post("http://localhost:3000/user/signup", {
+        await axios.post("http://localhost:3000/api/v1/user/signup", {
           firstName,
           lastName,
           username: email,
           password,
         });
         // Navigate to the login page after successful signup
-        navigate("/Signin");
+        
+          // Navigate to the login page
+          navigate("/signin");
       } catch (error) {
         console.error("Signup failed", error);
       }
   }
   function navigateToLogin() {
-    navigate('/Signin')
+    navigate('/signin')
   }
   return (
     <div className="flex justify-center items-center min-h-screen">
@@ -36,7 +38,7 @@ function Signup() {
           <h2 className="text-lg text-slate-400 pb-5">
             enter your information to create account
           </h2>
-          <form className="grid justify-items-center" onSubmit={handleSubmit}>
+          <form className="grid justify-items-center">
             <label for="first name" className="font-bold">
               First Name
             </label>
@@ -67,7 +69,7 @@ function Signup() {
               Password
             </label>
             <input
-              type="text"
+              type="password"
               id="password"
               name="password"
               className="mb-2 border border-gray-300 rounded-md p-1"
@@ -90,7 +92,8 @@ function Signup() {
 
             <button
               type="submit"
-              className="border-solid border-sky-500 bg-black text-white p-2 rounded-2xl w-full"
+              className="border-solid border-sky-500 bg-black text-white p-2 rounded-2xl w-full hover:bg-slate-700"
+              onClick={handleSubmit}
             >
               Submit
             </button>
